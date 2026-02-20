@@ -1,0 +1,85 @@
+import {
+  createPublicClient,
+  createWalletClient,
+  http,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { opSepolia } from "../chains/index.js";
+import { getAddresses } from "../addresses/index.js";
+import { createIdentityReader, createIdentityWriter } from "../contracts/identity.js";
+import { createReputationReader, createReputationWriter } from "../contracts/reputation.js";
+import { createValidationReader, createValidationWriter } from "../contracts/validation.js";
+import { watchAgentRegistered, watchAgentStatusChanged } from "../events/identity-events.js";
+import { watchFeedbackGiven, watchFeedbackRevoked } from "../events/reputation-events.js";
+import { watchValidationRequested, watchValidationFinalized } from "../events/validation-events.js";
+import type { AgentClientConfig, TagitAgentClient } from "../types/client.js";
+import { SdkError } from "../errors/index.js";
+
+export function createAgentClient(config: AgentClientConfig = {}): TagitAgentClient {
+  const chain = config.chain ?? opSepolia;
+  const rpcUrl = config.rpcUrl ?? chain.rpcUrls.default.http[0];
+
+  if (!rpcUrl) {
+    throw new SdkError("No RPC URL provided and chain has no default");
+  }
+
+  const publicClient: PublicClient =
+    config.publicClient ??
+    createPublicClient({
+      chain,
+      transport: http(rpcUrl),
+    });
+
+  let walletClient: WalletClient | undefined = config.walletClient;
+
+  if (!walletClient && config.privateKey) {
+    const account = privateKeyToAccount(config.privateKey);
+    walletClient = createWalletClient({
+      chain,
+      transport: http(rpcUrl),
+      account,
+    });
+  }
+
+  const addresses = getAddresses(chain.id);
+
+  const identityRead = createIdentityReader(publicClient, addresses.TAGITAgentIdentity);
+  const reputationRead = createReputationReader(publicClient, addresses.TAGITAgentReputation);
+  const validationRead = createValidationReader(publicClient, addresses.TAGITAgentValidation);
+
+  const identityWrite = walletClient
+    ? createIdentityWriter(walletClient, publicClient, addresses.TAGITAgentIdentity)
+    : {};
+
+  const reputationWrite = walletClient
+    ? createReputationWriter(walletClient, publicClient, addresses.TAGITAgentReputation)
+    : {};
+
+  const validationWrite = walletClient
+    ? createValidationWriter(walletClient, publicClient, addresses.TAGITAgentValidation)
+    : {};
+
+  return {
+    identity: { ...identityRead, ...identityWrite },
+    reputation: { ...reputationRead, ...reputationWrite },
+    validation: { ...validationRead, ...validationWrite },
+    events: {
+      watchAgentRegistered: (onLogs) =>
+        watchAgentRegistered(publicClient, addresses.TAGITAgentIdentity, onLogs),
+      watchAgentStatusChanged: (onLogs) =>
+        watchAgentStatusChanged(publicClient, addresses.TAGITAgentIdentity, onLogs),
+      watchFeedbackGiven: (onLogs) =>
+        watchFeedbackGiven(publicClient, addresses.TAGITAgentReputation, onLogs),
+      watchFeedbackRevoked: (onLogs) =>
+        watchFeedbackRevoked(publicClient, addresses.TAGITAgentReputation, onLogs),
+      watchValidationRequested: (onLogs) =>
+        watchValidationRequested(publicClient, addresses.TAGITAgentValidation, onLogs),
+      watchValidationFinalized: (onLogs) =>
+        watchValidationFinalized(publicClient, addresses.TAGITAgentValidation, onLogs),
+    },
+    publicClient,
+    walletClient,
+  };
+}

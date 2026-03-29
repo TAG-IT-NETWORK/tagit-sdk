@@ -40,6 +40,9 @@ export {
   requestIdSchema,
 } from "./utils/index.js";
 
+// Bridge client
+export { createBridgeClient, type BridgeClientConfig, type TagitBridgeClient } from "./bridge/index.js";
+
 // A2A client
 export {
   A2AClient,

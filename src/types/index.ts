@@ -22,3 +22,15 @@ export {
   type ValidationWriteMethods,
   type EventMethods,
 } from "./client.js";
+
+export {
+  BridgeMode,
+  type TransferRecord,
+  type BridgeParams,
+  type BridgeResult,
+  type CrossChainSentLog,
+  type CrossChainReceivedLog,
+  type BridgeReadMethods,
+  type BridgeWriteMethods,
+  type BridgeEventMethods,
+} from "./bridge.js";

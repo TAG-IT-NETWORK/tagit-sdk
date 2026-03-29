@@ -34,3 +34,22 @@ export {
   type BridgeWriteMethods,
   type BridgeEventMethods,
 } from "./bridge.js";
+
+export {
+  type WTagReadMethods,
+  type WTagWriteMethods,
+  type WTagEvents,
+} from "./wtag.js";
+
+export {
+  type VoucherData,
+  type VoucherReadMethods,
+  type VoucherWriteMethods,
+  type VoucherEvents,
+} from "./voucher.js";
+
+export {
+  type AgentInfo,
+  type AgentReadMethods,
+  type AgentWriteMethods,
+} from "./agent-identity.js";

@@ -15,10 +15,30 @@ export {
   type ValidatorStats,
   type AgentClientConfig,
   type TagitAgentClient,
+  type WTagReadMethods,
+  type WTagWriteMethods,
+  type WTagEvents,
+  type VoucherData,
+  type VoucherReadMethods,
+  type VoucherWriteMethods,
+  type VoucherEvents,
+  type AgentInfo,
+  type AgentReadMethods,
+  type AgentWriteMethods,
 } from "./types/index.js";
 
+// Contract clients
+export {
+  createWTagReader,
+  createWTagWriter,
+  createVoucherReader,
+  createVoucherWriter,
+  createAgentReader,
+  createAgentWriter,
+} from "./contracts/index.js";
+
 // ABIs
-export { agentIdentityAbi, agentReputationAbi, agentValidationAbi } from "./abi/index.js";
+export { agentIdentityAbi, agentReputationAbi, agentValidationAbi, wtagAbi, voucherAbi } from "./abi/index.js";
 
 // Addresses & chains
 export { getAddresses, type ContractAddresses } from "./addresses/index.js";

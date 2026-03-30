@@ -8,7 +8,14 @@ const CONTRACT_NAME = "wTAG";
 
 /**
  * Create read-only methods for the wTAG governance token contract.
- * All methods return typed values via viem readContract calls.
+ *
+ * wTAG is a wrapped ERC-20 with ERC20Votes support, used for governance
+ * delegation and cross-chain bridging within the TAG IT ecosystem.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed wTAG contract address.
+ * @returns An object implementing {@link WTagReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
  */
 export function createWTagReader(
   publicClient: PublicClient,
@@ -97,7 +104,15 @@ export function createWTagReader(
 
 /**
  * Create write methods for the wTAG governance token contract.
- * All write methods simulate first, then send the transaction, returning a tx hash.
+ *
+ * All write methods simulate the transaction before broadcasting, returning
+ * a transaction hash on success or throwing {@link ContractError} on revert.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed wTAG contract address.
+ * @returns An object implementing {@link WTagWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
  */
 export function createWTagWriter(
   walletClient: WalletClient,

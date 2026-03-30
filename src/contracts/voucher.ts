@@ -8,7 +8,14 @@ const CONTRACT_NAME = "Voucher";
 
 /**
  * Create read-only methods for the Voucher (non-transferable reward) contract.
- * Vouchers are issued by TAGITCore and redeemable for wTAG.
+ *
+ * Vouchers are issued by TAGITCore and redeemable for wTAG at a configurable
+ * basis-point redemption rate.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed Voucher contract address.
+ * @returns An object implementing {@link VoucherReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
  */
 export function createVoucherReader(
   publicClient: PublicClient,
@@ -104,7 +111,15 @@ export function createVoucherReader(
 
 /**
  * Create write methods for the Voucher contract.
- * All write methods simulate first, then send the transaction, returning a tx hash.
+ *
+ * All write methods simulate the transaction before broadcasting, returning
+ * a transaction hash on success or throwing {@link ContractError} on revert.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed Voucher contract address.
+ * @returns An object implementing {@link VoucherWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
  */
 export function createVoucherWriter(
   walletClient: WalletClient,

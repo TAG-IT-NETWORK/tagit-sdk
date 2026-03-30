@@ -1,6 +1,14 @@
 import type { Address, PublicClient } from "viem";
 import { agentIdentityAbi } from "../abi/agent-identity.js";
 
+/**
+ * Watch for `AgentRegistered` events on the TAGITAgentIdentity contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentIdentity contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchAgentRegistered(
   publicClient: PublicClient,
   address: Address,
@@ -23,6 +31,14 @@ export function watchAgentRegistered(
   });
 }
 
+/**
+ * Watch for `AgentStatusChanged` events on the TAGITAgentIdentity contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentIdentity contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchAgentStatusChanged(
   publicClient: PublicClient,
   address: Address,

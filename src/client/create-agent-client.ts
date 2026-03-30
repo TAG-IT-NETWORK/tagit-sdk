@@ -17,6 +17,31 @@ import { watchValidationRequested, watchValidationFinalized } from "../events/va
 import type { AgentClientConfig, TagitAgentClient } from "../types/client.js";
 import { SdkError } from "../errors/index.js";
 
+/**
+ * Create a fully-configured TAGIT agent client with identity, reputation,
+ * and validation contract access plus real-time event watchers.
+ *
+ * When called without a `walletClient` or `privateKey`, write methods are
+ * omitted and the client operates in read-only mode.
+ *
+ * @param config - Client configuration (chain, RPC URL, keys, pre-built viem clients).
+ *   Defaults to OP Sepolia with the chain's default public RPC.
+ * @returns A {@link TagitAgentClient} with identity, reputation, validation, and events namespaces.
+ * @throws {SdkError} If no RPC URL can be resolved from the config or chain definition.
+ *
+ * @example
+ * ```ts
+ * import { createAgentClient } from "@tagit/sdk";
+ *
+ * // Read-only (no private key)
+ * const client = createAgentClient();
+ * const agent = await client.identity.getAgent(1n);
+ *
+ * // Read-write (with private key)
+ * const rw = createAgentClient({ privateKey: "0x..." });
+ * const txHash = await rw.identity.register!("0x...", "https://meta.json");
+ * ```
+ */
 export function createAgentClient(config: AgentClientConfig = {}): TagitAgentClient {
   const chain = config.chain ?? opSepolia;
   const rpcUrl = config.rpcUrl ?? chain.rpcUrls.default.http[0];

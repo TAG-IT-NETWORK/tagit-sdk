@@ -1,13 +1,25 @@
 import type { Address, Chain, PublicClient, WalletClient } from "viem";
 
+/**
+ * Configuration for {@link createAgentClient}.
+ *
+ * All fields are optional. When omitted, the client defaults to OP Sepolia
+ * with the chain's default public RPC and read-only mode.
+ */
 export interface AgentClientConfig {
+  /** Target chain definition (defaults to OP Sepolia). */
   chain?: Chain;
+  /** Custom RPC URL (overrides the chain's default). */
   rpcUrl?: string;
+  /** Private key for creating a wallet client (hex-encoded with `0x` prefix). */
   privateKey?: `0x${string}`;
+  /** Pre-built viem public client (overrides chain/rpcUrl). */
   publicClient?: PublicClient;
+  /** Pre-built viem wallet client (overrides privateKey). */
   walletClient?: WalletClient;
 }
 
+/** Read-only methods for the TAGITAgentIdentity contract. */
 export interface IdentityReadMethods {
   getAgent(agentId: bigint): Promise<{
     registrant: Address;
@@ -25,6 +37,7 @@ export interface IdentityReadMethods {
   tokenURI(agentId: bigint): Promise<string>;
 }
 
+/** Write methods for the TAGITAgentIdentity contract (require wallet). */
 export interface IdentityWriteMethods {
   register(wallet: Address, uri: string, value?: bigint): Promise<`0x${string}`>;
   setAgentURI(agentId: bigint, uri: string): Promise<`0x${string}`>;
@@ -34,6 +47,7 @@ export interface IdentityWriteMethods {
   decommissionAgent(agentId: bigint): Promise<`0x${string}`>;
 }
 
+/** Read-only methods for the TAGITAgentReputation contract. */
 export interface ReputationReadMethods {
   getSummary(agentId: bigint): Promise<{
     totalFeedback: bigint;
@@ -66,12 +80,14 @@ export interface ReputationReadMethods {
   getReviewerFeedback(reviewer: Address, agentId: bigint): Promise<bigint>;
 }
 
+/** Write methods for the TAGITAgentReputation contract (require wallet). */
 export interface ReputationWriteMethods {
   giveFeedback(agentId: bigint, rating: number, comment: string): Promise<`0x${string}`>;
   revokeFeedback(feedbackId: bigint): Promise<`0x${string}`>;
   appendResponse(feedbackId: bigint, responseText: string): Promise<`0x${string}`>;
 }
 
+/** Read-only methods for the TAGITAgentValidation contract. */
 export interface ValidationReadMethods {
   getRequest(requestId: bigint): Promise<{
     agentId: bigint;
@@ -112,11 +128,13 @@ export interface ValidationReadMethods {
   hasValidatorResponded(requestId: bigint, validator: Address): Promise<boolean>;
 }
 
+/** Write methods for the TAGITAgentValidation contract (require wallet). */
 export interface ValidationWriteMethods {
   validationRequest(agentId: bigint, isDefense: boolean): Promise<`0x${string}`>;
   validationResponse(requestId: bigint, score: number, justification: string): Promise<`0x${string}`>;
 }
 
+/** Real-time event watcher methods for identity, reputation, and validation contracts. */
 export interface EventMethods {
   watchAgentRegistered(
     onLogs: (logs: readonly { agentId: bigint; registrant: Address; wallet: Address; uri: string }[]) => void,
@@ -140,6 +158,12 @@ export interface EventMethods {
   ): () => void;
 }
 
+/**
+ * The main SDK client returned by {@link createAgentClient}.
+ *
+ * Bundles identity, reputation, and validation contract access with event watchers.
+ * Write methods are `Partial` -- they exist only when a wallet client is configured.
+ */
 export interface TagitAgentClient {
   identity: IdentityReadMethods & Partial<IdentityWriteMethods>;
   reputation: ReputationReadMethods & Partial<ReputationWriteMethods>;

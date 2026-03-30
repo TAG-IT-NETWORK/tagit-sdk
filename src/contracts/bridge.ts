@@ -11,6 +11,16 @@ import type {
 
 const abi = ccipBridgeAdapterAbi;
 
+/**
+ * Create read-only methods for the CCIPBridgeAdapter contract.
+ *
+ * Provides fee estimation, transfer lookup, and bridge configuration queries.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed CCIPBridgeAdapter contract address.
+ * @returns An object implementing {@link BridgeReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
+ */
 export function createBridgeReader(
   publicClient: PublicClient,
   address: Address,
@@ -98,6 +108,15 @@ export function createBridgeReader(
   };
 }
 
+/**
+ * Create write methods for the CCIPBridgeAdapter contract.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed CCIPBridgeAdapter contract address.
+ * @returns An object implementing {@link BridgeWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
+ */
 export function createBridgeWriter(
   walletClient: WalletClient,
   publicClient: PublicClient,

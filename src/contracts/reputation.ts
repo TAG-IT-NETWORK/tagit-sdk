@@ -5,6 +5,14 @@ import type { ReputationReadMethods, ReputationWriteMethods } from "../types/cli
 
 const abi = agentReputationAbi;
 
+/**
+ * Create read-only methods for the TAGITAgentReputation contract.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed TAGITAgentReputation contract address.
+ * @returns An object implementing {@link ReputationReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
+ */
 export function createReputationReader(
   publicClient: PublicClient,
   address: Address,
@@ -48,6 +56,18 @@ export function createReputationReader(
   };
 }
 
+/**
+ * Create write methods for the TAGITAgentReputation contract.
+ *
+ * Each method simulates the transaction before broadcasting to surface
+ * revert reasons as {@link ContractError}.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed TAGITAgentReputation contract address.
+ * @returns An object implementing {@link ReputationWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
+ */
 export function createReputationWriter(
   walletClient: WalletClient,
   publicClient: PublicClient,

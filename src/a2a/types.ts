@@ -1,5 +1,8 @@
-/** A2A Protocol types — Google Agent-to-Agent JSON-RPC 2.0 */
+/** A2A Protocol types -- Google Agent-to-Agent JSON-RPC 2.0 */
 
+/**
+ * Remote agent's self-description, served at `/.well-known/agent.json`.
+ */
 export interface AgentCard {
   name: string;
   description: string;
@@ -11,12 +14,14 @@ export interface AgentCard {
   defaultOutputModes: string[];
 }
 
+/** Capabilities advertised by the remote agent. */
 export interface AgentCapabilities {
   streaming: boolean;
   pushNotifications: boolean;
   stateTransitionHistory: boolean;
 }
 
+/** A skill exposed by the remote agent. */
 export interface AgentCardSkill {
   id: string;
   name: string;
@@ -25,6 +30,7 @@ export interface AgentCardSkill {
   inputSchema: Record<string, unknown>;
 }
 
+/** JSON-RPC 2.0 request envelope. */
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id: string | number;
@@ -32,6 +38,7 @@ export interface JsonRpcRequest {
   params?: Record<string, unknown>;
 }
 
+/** JSON-RPC 2.0 response envelope. */
 export interface JsonRpcResponse {
   jsonrpc: "2.0";
   id: string | number | null;
@@ -39,12 +46,14 @@ export interface JsonRpcResponse {
   error?: JsonRpcError;
 }
 
+/** JSON-RPC 2.0 error object. */
 export interface JsonRpcError {
   code: number;
   message: string;
   data?: unknown;
 }
 
+/** Possible lifecycle statuses of an A2A task. */
 export type TaskStatus =
   | "submitted"
   | "working"
@@ -53,6 +62,7 @@ export type TaskStatus =
   | "canceled"
   | "failed";
 
+/** A task managed by the remote A2A agent. */
 export interface A2ATask {
   id: string;
   status: TaskStatus;
@@ -75,19 +85,23 @@ export const RPC_ERRORS = {
   SKILL_NOT_FOUND: -32002,
 } as const;
 
+/** Parameters for the `sendTask` / `subscribe` methods. */
 export interface SendTaskParams {
   skill: string;
   input: Record<string, unknown>;
 }
 
+/** Parameters for the `getTask` method. */
 export interface GetTaskParams {
   id: string;
 }
 
+/** Parameters for the `cancelTask` method. */
 export interface CancelTaskParams {
   id: string;
 }
 
+/** Configuration for {@link A2AClient}. */
 export interface A2AClientConfig {
   baseUrl: string;
   authToken?: string;
@@ -96,6 +110,7 @@ export interface A2AClientConfig {
   fetch?: typeof globalThis.fetch;
 }
 
+/** A single parsed Server-Sent Event from an A2A streaming response. */
 export interface SSEEvent {
   event: string;
   data: unknown;

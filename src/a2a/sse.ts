@@ -1,12 +1,20 @@
 import type { SSEEvent } from "./types.js";
 
 /**
- * Parse an SSE stream (text/event-stream) into an async generator of events.
+ * Parse an SSE stream (`text/event-stream`) into an async generator of events.
  *
  * Wire format:
- *   event: <name>\n
- *   data: <json>\n
- *   \n
+ * ```
+ * event: <name>\n
+ * data: <json>\n
+ * \n
+ * ```
+ *
+ * Data payloads are JSON-parsed when possible; raw strings are yielded otherwise.
+ * The stream reader is released in a `finally` block to prevent resource leaks.
+ *
+ * @param stream - A `ReadableStream<Uint8Array>` from a fetch response body.
+ * @returns An async generator yielding {@link SSEEvent} objects.
  */
 export async function* parseSSEStream(
   stream: ReadableStream<Uint8Array>,

@@ -21,6 +21,22 @@ const DEFAULT_TIMEOUT = 30_000;
 const DEFAULT_MAX_RETRIES = 3;
 const BASE_DELAY_MS = 1_000;
 
+/**
+ * Client for the Google Agent-to-Agent (A2A) JSON-RPC 2.0 protocol.
+ *
+ * Handles connection to a remote agent endpoint, agent card discovery,
+ * task lifecycle (send / get / cancel), and SSE streaming.
+ * Includes automatic retry with exponential back-off for transient failures.
+ *
+ * @example
+ * ```ts
+ * import { A2AClient } from "@tagit/sdk/a2a";
+ *
+ * const client = new A2AClient({ baseUrl: "https://agent.example.com" });
+ * const card = await client.connect();
+ * const task = await client.sendTask({ skill: "verify", input: { id: "abc" } });
+ * ```
+ */
 export class A2AClient {
   private readonly _baseUrl: string;
   private readonly _authToken: string | undefined;
@@ -30,6 +46,12 @@ export class A2AClient {
   private _cachedCard: AgentCard | null = null;
   private _requestId = 0;
 
+  /**
+   * Create a new A2A client.
+   *
+   * @param config - Connection configuration including base URL, optional auth token,
+   *   timeout (default 30 s), max retries (default 3), and injectable fetch implementation.
+   */
   constructor(config: A2AClientConfig) {
     this._baseUrl = config.baseUrl.replace(/\/+$/, "");
     this._authToken = config.authToken;
@@ -38,10 +60,20 @@ export class A2AClient {
     this._fetch = config.fetch ?? globalThis.fetch;
   }
 
+  /** The cached agent card, or `null` if {@link connect} has not been called yet. */
   get agentCard(): AgentCard | null {
     return this._cachedCard;
   }
 
+  /**
+   * Fetch the remote agent's card from `/.well-known/agent.json`.
+   * Returns the cached card on subsequent calls unless `force` is set.
+   *
+   * @param opts - Pass `{ force: true }` to bypass the cache and re-fetch.
+   * @returns The validated {@link AgentCard}.
+   * @throws {A2AConnectionError} On network failure.
+   * @throws {A2ATimeoutError} If the request exceeds the configured timeout.
+   */
   async connect(opts?: { force?: boolean }): Promise<AgentCard> {
     if (this._cachedCard && !opts?.force) {
       return this._cachedCard;
@@ -56,6 +88,14 @@ export class A2AClient {
     return this._cachedCard;
   }
 
+  /**
+   * Send a task to the remote agent via `message/send`.
+   *
+   * @param params - Skill name and input payload.
+   * @returns The created {@link A2ATask}.
+   * @throws {A2AProtocolError} If the agent returns a JSON-RPC error.
+   * @throws {A2AConnectionError} On network failure after exhausting retries.
+   */
   async sendTask(params: SendTaskParams): Promise<A2ATask> {
     const response = await this._rpc("message/send", {
       skill: params.skill,
@@ -64,16 +104,42 @@ export class A2AClient {
     return a2aTaskSchema.parse(response);
   }
 
+  /**
+   * Retrieve the current state of a previously submitted task.
+   *
+   * @param params - Object containing the task `id`.
+   * @returns The current {@link A2ATask} state.
+   * @throws {A2AProtocolError} If the task is not found or the agent returns an error.
+   */
   async getTask(params: GetTaskParams): Promise<A2ATask> {
     const response = await this._rpc("tasks/get", { id: params.id });
     return a2aTaskSchema.parse(response);
   }
 
+  /**
+   * Cancel a previously submitted task.
+   *
+   * @param params - Object containing the task `id`.
+   * @returns The updated {@link A2ATask} with status `"canceled"`.
+   * @throws {A2AProtocolError} If the task cannot be canceled or is not found.
+   */
   async cancelTask(params: CancelTaskParams): Promise<A2ATask> {
     const response = await this._rpc("tasks/cancel", { id: params.id });
     return a2aTaskSchema.parse(response);
   }
 
+  /**
+   * Send a task and subscribe to its SSE event stream.
+   *
+   * Yields individual {@link SSEEvent} objects as they arrive.
+   * If the server returns JSON instead of SSE, falls back to a single-result parse.
+   * The generator's return value is the final task state (if extractable).
+   *
+   * @param params - Skill name and input payload.
+   * @returns An async generator of SSE events; the return value is the final task.
+   * @throws {A2AConnectionError} If the response body is missing.
+   * @throws {A2AProtocolError} If the server returns a JSON-RPC error.
+   */
   async *subscribe(
     params: SendTaskParams,
   ): AsyncGenerator<SSEEvent, A2ATask | undefined, undefined> {

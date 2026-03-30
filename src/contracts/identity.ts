@@ -5,6 +5,14 @@ import type { IdentityReadMethods, IdentityWriteMethods } from "../types/client.
 
 const abi = agentIdentityAbi;
 
+/**
+ * Create read-only methods for the TAGITAgentIdentity contract.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed TAGITAgentIdentity contract address.
+ * @returns An object implementing {@link IdentityReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
+ */
 export function createIdentityReader(
   publicClient: PublicClient,
   address: Address,
@@ -84,6 +92,18 @@ export function createIdentityReader(
   };
 }
 
+/**
+ * Create write methods for the TAGITAgentIdentity contract.
+ *
+ * Each method simulates the transaction before broadcasting, ensuring
+ * on-chain revert reasons surface as {@link ContractError}.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed TAGITAgentIdentity contract address.
+ * @returns An object implementing {@link IdentityWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
+ */
 export function createIdentityWriter(
   walletClient: WalletClient,
   publicClient: PublicClient,

@@ -5,6 +5,14 @@ import type { ValidationReadMethods, ValidationWriteMethods } from "../types/cli
 
 const abi = agentValidationAbi;
 
+/**
+ * Create read-only methods for the TAGITAgentValidation contract.
+ *
+ * @param publicClient - viem public client connected to the target chain.
+ * @param address - Deployed TAGITAgentValidation contract address.
+ * @returns An object implementing {@link ValidationReadMethods}.
+ * @throws {ContractError} When any underlying contract read fails.
+ */
 export function createValidationReader(
   publicClient: PublicClient,
   address: Address,
@@ -67,6 +75,18 @@ export function createValidationReader(
   };
 }
 
+/**
+ * Create write methods for the TAGITAgentValidation contract.
+ *
+ * Each method simulates the transaction before broadcasting to surface
+ * revert reasons as {@link ContractError}.
+ *
+ * @param walletClient - viem wallet client with an attached account.
+ * @param publicClient - viem public client for simulation.
+ * @param address - Deployed TAGITAgentValidation contract address.
+ * @returns An object implementing {@link ValidationWriteMethods}.
+ * @throws {ContractError} When the wallet has no account or a transaction reverts.
+ */
 export function createValidationWriter(
   walletClient: WalletClient,
   publicClient: PublicClient,

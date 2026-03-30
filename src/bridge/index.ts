@@ -31,6 +31,14 @@ export interface TagitBridgeClient {
 /**
  * Create a CCIP bridge client for cross-chain wTAG transfers.
  *
+ * The client bundles read-only queries, write transactions, and event watchers.
+ * When no `walletClient` is provided, write methods and `bridgeTokens` are `undefined`.
+ * The convenience `bridgeTokens` method estimates the CCIP fee (with a 10 % buffer)
+ * and sends the cross-chain transfer in a single call.
+ *
+ * @param config - Bridge client configuration (public client, optional wallet, adapter address).
+ * @returns A {@link TagitBridgeClient} with `read`, optional `write`/`bridgeTokens`, and `events`.
+ *
  * @example
  * ```ts
  * const bridge = createBridgeClient({

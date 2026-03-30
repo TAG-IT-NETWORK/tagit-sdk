@@ -1,6 +1,14 @@
 import type { Address, PublicClient } from "viem";
 import { agentReputationAbi } from "../abi/agent-reputation.js";
 
+/**
+ * Watch for `FeedbackGiven` events on the TAGITAgentReputation contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentReputation contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchFeedbackGiven(
   publicClient: PublicClient,
   address: Address,
@@ -23,6 +31,14 @@ export function watchFeedbackGiven(
   });
 }
 
+/**
+ * Watch for `FeedbackRevoked` events on the TAGITAgentReputation contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentReputation contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchFeedbackRevoked(
   publicClient: PublicClient,
   address: Address,

@@ -2,6 +2,14 @@ import type { Address, PublicClient } from "viem";
 import { ccipBridgeAdapterAbi } from "../abi/ccip-bridge-adapter.js";
 import type { CrossChainSentLog, CrossChainReceivedLog } from "../types/bridge.js";
 
+/**
+ * Watch for `CrossChainSent` events on the CCIPBridgeAdapter contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - CCIPBridgeAdapter contract address.
+ * @param onLogs - Callback invoked with parsed {@link CrossChainSentLog} entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchCrossChainSent(
   publicClient: PublicClient,
   address: Address,
@@ -27,6 +35,14 @@ export function watchCrossChainSent(
   });
 }
 
+/**
+ * Watch for `CrossChainReceived` events on the CCIPBridgeAdapter contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - CCIPBridgeAdapter contract address.
+ * @param onLogs - Callback invoked with parsed {@link CrossChainReceivedLog} entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchCrossChainReceived(
   publicClient: PublicClient,
   address: Address,

@@ -1,6 +1,14 @@
 import type { Address, PublicClient } from "viem";
 import { agentValidationAbi } from "../abi/agent-validation.js";
 
+/**
+ * Watch for `ValidationRequested` events on the TAGITAgentValidation contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentValidation contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchValidationRequested(
   publicClient: PublicClient,
   address: Address,
@@ -25,6 +33,14 @@ export function watchValidationRequested(
   });
 }
 
+/**
+ * Watch for `ValidationFinalized` events on the TAGITAgentValidation contract.
+ *
+ * @param publicClient - viem public client for event subscription.
+ * @param address - TAGITAgentValidation contract address.
+ * @param onLogs - Callback invoked with parsed log entries.
+ * @returns An unsubscribe function that stops the watcher.
+ */
 export function watchValidationFinalized(
   publicClient: PublicClient,
   address: Address,

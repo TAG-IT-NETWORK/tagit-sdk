@@ -5,6 +5,23 @@ import { A2AConnectionError, A2ATimeoutError } from "./errors.js";
 const AGENT_CARD_PATH = "/.well-known/agent.json";
 const DEFAULT_TIMEOUT = 30_000;
 
+/**
+ * Fetch and validate an A2A agent card from `<baseUrl>/.well-known/agent.json`.
+ *
+ * @param baseUrl - The agent server's base URL (trailing slashes are stripped).
+ * @param config - Optional auth token, timeout, and injectable fetch function.
+ * @returns A validated {@link AgentCard}.
+ * @throws {A2AConnectionError} When the HTTP request fails or returns a non-OK status.
+ * @throws {A2ATimeoutError} When the request exceeds the configured timeout.
+ *
+ * @example
+ * ```ts
+ * import { fetchAgentCard } from "@tagit/sdk/a2a";
+ *
+ * const card = await fetchAgentCard("https://agent.example.com");
+ * console.log(card.name, card.skills);
+ * ```
+ */
 export async function fetchAgentCard(
   baseUrl: string,
   config?: Pick<A2AClientConfig, "authToken" | "timeout" | "fetch">,

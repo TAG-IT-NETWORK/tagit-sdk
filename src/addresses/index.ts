@@ -8,6 +8,8 @@ export interface ContractAddresses {
   TAGITAgentReputation: Address;
   /** TAGITAgentValidation proxy address. */
   TAGITAgentValidation: Address;
+  /** ReputationStaking (credibility bond) contract address. */
+  ReputationStaking: Address;
 }
 
 /** @internal Registry of deployed addresses keyed by chain ID. */
@@ -16,6 +18,8 @@ const addresses: Record<number, ContractAddresses> = {
     TAGITAgentIdentity: "0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D",
     TAGITAgentReputation: "0x57CCa1974DFE29593FBD24fdAEE1cD614Bfd6E4a",
     TAGITAgentValidation: "0x9806919185F98Bd07a64F7BC7F264e91939e86b7",
+    // TODO: Replace with deployed ReputationStaking address on OP Sepolia
+    ReputationStaking: "0x0000000000000000000000000000000000000000",
   },
 };
 

@@ -134,7 +134,21 @@ export interface ValidationWriteMethods {
   validationResponse(requestId: bigint, score: number, justification: string): Promise<`0x${string}`>;
 }
 
-/** Real-time event watcher methods for identity, reputation, and validation contracts. */
+/** Read-only methods for the ReputationStaking (credibility bond) contract. */
+export interface StakingReadMethods {
+  getAgentStake(agentId: bigint): Promise<bigint>;
+  getMinBond(): Promise<bigint>;
+  hasMinBond(agentId: bigint): Promise<boolean>;
+  getStaker(agentId: bigint): Promise<Address>;
+}
+
+/** Write methods for the ReputationStaking contract (require wallet). */
+export interface StakingWriteMethods {
+  stake(agentId: bigint, amount: bigint): Promise<`0x${string}`>;
+  unstake(agentId: bigint): Promise<`0x${string}`>;
+}
+
+/** Real-time event watcher methods for identity, reputation, validation, and staking contracts. */
 export interface EventMethods {
   watchAgentRegistered(
     onLogs: (logs: readonly { agentId: bigint; registrant: Address; wallet: Address; uri: string }[]) => void,
@@ -156,6 +170,15 @@ export interface EventMethods {
   watchValidationFinalized(
     onLogs: (logs: readonly { requestId: bigint; agentId: bigint; passed: boolean; finalScore: bigint }[]) => void,
   ): () => void;
+  watchStakeDeposited(
+    onLogs: (logs: readonly { agentId: bigint; staker: Address; amount: bigint }[]) => void,
+  ): () => void;
+  watchStakeWithdrawn(
+    onLogs: (logs: readonly { agentId: bigint; staker: Address; amount: bigint }[]) => void,
+  ): () => void;
+  watchStakeSlashed(
+    onLogs: (logs: readonly { agentId: bigint; amount: bigint; slashedBy: Address }[]) => void,
+  ): () => void;
 }
 
 /**
@@ -168,6 +191,7 @@ export interface TagitAgentClient {
   identity: IdentityReadMethods & Partial<IdentityWriteMethods>;
   reputation: ReputationReadMethods & Partial<ReputationWriteMethods>;
   validation: ValidationReadMethods & Partial<ValidationWriteMethods>;
+  staking: StakingReadMethods & Partial<StakingWriteMethods>;
   events: EventMethods;
   publicClient: PublicClient;
   walletClient?: WalletClient;

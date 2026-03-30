@@ -11,9 +11,11 @@ import { getAddresses } from "../addresses/index.js";
 import { createIdentityReader, createIdentityWriter } from "../contracts/identity.js";
 import { createReputationReader, createReputationWriter } from "../contracts/reputation.js";
 import { createValidationReader, createValidationWriter } from "../contracts/validation.js";
+import { createStakingReader, createStakingWriter } from "../contracts/staking.js";
 import { watchAgentRegistered, watchAgentStatusChanged } from "../events/identity-events.js";
 import { watchFeedbackGiven, watchFeedbackRevoked } from "../events/reputation-events.js";
 import { watchValidationRequested, watchValidationFinalized } from "../events/validation-events.js";
+import { watchStakeDeposited, watchStakeWithdrawn, watchStakeSlashed } from "../events/staking-events.js";
 import type { AgentClientConfig, TagitAgentClient } from "../types/client.js";
 import { SdkError } from "../errors/index.js";
 
@@ -73,6 +75,7 @@ export function createAgentClient(config: AgentClientConfig = {}): TagitAgentCli
   const identityRead = createIdentityReader(publicClient, addresses.TAGITAgentIdentity);
   const reputationRead = createReputationReader(publicClient, addresses.TAGITAgentReputation);
   const validationRead = createValidationReader(publicClient, addresses.TAGITAgentValidation);
+  const stakingRead = createStakingReader(publicClient, addresses.ReputationStaking);
 
   const identityWrite = walletClient
     ? createIdentityWriter(walletClient, publicClient, addresses.TAGITAgentIdentity)
@@ -86,10 +89,15 @@ export function createAgentClient(config: AgentClientConfig = {}): TagitAgentCli
     ? createValidationWriter(walletClient, publicClient, addresses.TAGITAgentValidation)
     : {};
 
+  const stakingWrite = walletClient
+    ? createStakingWriter(walletClient, publicClient, addresses.ReputationStaking)
+    : {};
+
   return {
     identity: { ...identityRead, ...identityWrite },
     reputation: { ...reputationRead, ...reputationWrite },
     validation: { ...validationRead, ...validationWrite },
+    staking: { ...stakingRead, ...stakingWrite },
     events: {
       watchAgentRegistered: (onLogs) =>
         watchAgentRegistered(publicClient, addresses.TAGITAgentIdentity, onLogs),
@@ -103,6 +111,12 @@ export function createAgentClient(config: AgentClientConfig = {}): TagitAgentCli
         watchValidationRequested(publicClient, addresses.TAGITAgentValidation, onLogs),
       watchValidationFinalized: (onLogs) =>
         watchValidationFinalized(publicClient, addresses.TAGITAgentValidation, onLogs),
+      watchStakeDeposited: (onLogs) =>
+        watchStakeDeposited(publicClient, addresses.ReputationStaking, onLogs),
+      watchStakeWithdrawn: (onLogs) =>
+        watchStakeWithdrawn(publicClient, addresses.ReputationStaking, onLogs),
+      watchStakeSlashed: (onLogs) =>
+        watchStakeSlashed(publicClient, addresses.ReputationStaking, onLogs),
     },
     publicClient,
     walletClient,

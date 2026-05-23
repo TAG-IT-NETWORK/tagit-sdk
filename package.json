@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.3.0",
+    "lint-staged": "^17.0.5",
     "typedoc": "^0.28.18",
     "typedoc-plugin-markdown": "^4.11.0",
     "typescript": "^5.7.3",
@@ -48,5 +49,8 @@
   "files": [
     "dist"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "lint-staged": {
+    "*.ts": "bash -c 'tsc -p tsconfig.build.json --noEmit'"
+  }
 }

@@ -39,6 +39,8 @@ export interface AgentReadMethods {
 export interface AgentWriteMethods {
   /** Register a new agent with a wallet address and metadata URI. */
   register(wallet: Address, uri: string, value?: bigint): Promise<`0x${string}`>;
+  /** Activate a registered agent after staking the credibility bond (register → stake → activate). */
+  activate(agentId: bigint): Promise<`0x${string}`>;
   /** Update an agent's metadata URI. */
   update(agentId: bigint, uri: string): Promise<`0x${string}`>;
   /** Decommission an agent (permanent deactivation). */

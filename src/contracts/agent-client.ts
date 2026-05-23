@@ -102,6 +102,16 @@ export function createAgentWriter(
         throw new ContractError(`register failed: ${e instanceof Error ? e.message : String(e)}`, CONTRACT_NAME, "register", { cause: e });
       }
     },
+    async activate(agentId: bigint) {
+      try {
+        const { request } = await publicClient.simulateContract({
+          address, abi, functionName: "activateAgent", args: [agentId], account: getAccount(),
+        });
+        return walletClient.writeContract(request);
+      } catch (e) {
+        throw new ContractError(`activate failed: ${e instanceof Error ? e.message : String(e)}`, CONTRACT_NAME, "activateAgent", { cause: e });
+      }
+    },
     async update(agentId: bigint, uri: string) {
       try {
         const { request } = await publicClient.simulateContract({

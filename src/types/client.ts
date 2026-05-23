@@ -40,6 +40,7 @@ export interface IdentityReadMethods {
 /** Write methods for the TAGITAgentIdentity contract (require wallet). */
 export interface IdentityWriteMethods {
   register(wallet: Address, uri: string, value?: bigint): Promise<`0x${string}`>;
+  activate(agentId: bigint): Promise<`0x${string}`>;
   setAgentURI(agentId: bigint, uri: string): Promise<`0x${string}`>;
   setMetadata(agentId: bigint, key: string, value: string): Promise<`0x${string}`>;
   suspendAgent(agentId: bigint): Promise<`0x${string}`>;

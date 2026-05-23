@@ -68,6 +68,13 @@ export const agentIdentityAbi = [
   },
   {
     "type": "function",
+    "name": "activateAgent",
+    "inputs": [{ "name": "agentId", "type": "uint256" }],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "approve",
     "inputs": [
       {
@@ -986,6 +993,11 @@ export const agentIdentityAbi = [
   },
   {
     "type": "error",
+    "name": "AgentNotInactive",
+    "inputs": [{ "name": "agentId", "type": "uint256" }]
+  },
+  {
+    "type": "error",
     "name": "AgentAlreadyInStatus",
     "inputs": [
       {
@@ -1007,6 +1019,11 @@ export const agentIdentityAbi = [
         "type": "uint256"
       }
     ]
+  },
+  {
+    "type": "error",
+    "name": "InsufficientCredibilityBond",
+    "inputs": [{ "name": "agentId", "type": "uint256" }]
   },
   {
     "type": "error",

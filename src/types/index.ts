@@ -53,3 +53,11 @@ export {
   type AgentReadMethods,
   type AgentWriteMethods,
 } from "./agent-identity.js";
+
+export {
+  AssetState,
+  type AssetData,
+  type ResolveApprovalStatus,
+  type TagitCoreReadMethods,
+  type TagitCoreWriteMethods,
+} from "./tagitcore.js";

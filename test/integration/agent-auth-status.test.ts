@@ -25,7 +25,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import type { Address, PublicClient } from "viem";
+import type { Address } from "viem";
 import { createIdentityReader } from "../../src/contracts/identity.js";
 import { createValidationReader } from "../../src/contracts/validation.js";
 import { createReputationReader } from "../../src/contracts/reputation.js";
@@ -35,7 +35,7 @@ import {
   MOCK_WALLET,
 } from "../helpers/mock-client.js";
 import { A2AClient } from "../../src/a2a/client.js";
-import { A2AProtocolError, A2AConnectionError } from "../../src/a2a/errors.js";
+import { A2AProtocolError } from "../../src/a2a/errors.js";
 
 const IDENTITY_ADDRESS = "0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D" as Address;
 const VALIDATION_ADDRESS = "0x9806919185F98Bd07a64F7BC7F264e91939e86b7" as Address;
@@ -47,13 +47,6 @@ const AgentStatus = {
   Active: 1,
   Suspended: 2,
   Decommissioned: 3,
-} as const;
-
-const RequestStatus = {
-  Pending: 0,
-  Passed: 1,
-  Failed: 2,
-  Expired: 3,
 } as const;
 
 // ── Test: Agent Identity Authorization ─────────────────────
@@ -331,7 +324,7 @@ describe("A2A client authorization header forwarding", () => {
 
     await client.sendTask({
       skill: "sage__echo",
-      input: [{ type: "text", text: "hello" }],
+      input: { text: "hello" },
     });
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -367,7 +360,7 @@ describe("A2A client authorization header forwarding", () => {
 
     await client.sendTask({
       skill: "sage__echo",
-      input: [{ type: "text", text: "hello" }],
+      input: { text: "hello" },
     });
 
     const [, init] = mockFetch.mock.calls[0] as [string, RequestInit];
@@ -400,7 +393,7 @@ describe("A2A client authorization header forwarding", () => {
     await expect(
       client.sendTask({
         skill: "sage__echo",
-        input: [{ type: "text", text: "hello" }],
+        input: { text: "hello" },
       }),
     ).rejects.toThrow(A2AProtocolError);
   });
@@ -440,7 +433,7 @@ describe("A2A client authorization header forwarding", () => {
 
     const task = await client.sendTask({
       skill: "sage__echo",
-      input: [{ type: "text", text: "retry-test" }],
+      input: { text: "retry-test" },
     });
 
     expect(task.id).toBe("task-1");

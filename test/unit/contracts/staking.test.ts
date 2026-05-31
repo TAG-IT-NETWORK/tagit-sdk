@@ -82,7 +82,7 @@ describe("Staking Writer", () => {
   it("stake simulates and writes", async () => {
     vi.mocked(publicClient.simulateContract).mockResolvedValue({
       request: {} as any,
-      result: undefined,
+      result: undefined as never,
     });
 
     const writer = createStakingWriter(walletClient, publicClient, CONTRACT_ADDRESS);
@@ -97,7 +97,7 @@ describe("Staking Writer", () => {
   it("unstake simulates and writes", async () => {
     vi.mocked(publicClient.simulateContract).mockResolvedValue({
       request: {} as any,
-      result: undefined,
+      result: undefined as never,
     });
 
     const writer = createStakingWriter(walletClient, publicClient, CONTRACT_ADDRESS);

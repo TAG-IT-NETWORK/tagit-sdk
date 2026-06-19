@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
-    "lint-staged": "^17.0.5",
+    "lint-staged": "^17.0.7",
     "typedoc": "^0.28.19",
     "typedoc-plugin-markdown": "^4.11.0",
     "typescript": "^6.0.3",

@@ -14,7 +14,7 @@ export const infoCommand = new Command("info")
   .action(async (opts: { agentId: string; rpcUrl?: string; json?: boolean }) => {
     const config = resolveConfig(opts);
     const publicClient = createCliPublicClient(config);
-    const addresses = getAddresses(11155420);
+    const addresses = getAddresses(84532);
 
     const identity = createIdentityReader(publicClient, addresses.TAGITAgentIdentity);
     const reputation = createReputationReader(publicClient, addresses.TAGITAgentReputation);

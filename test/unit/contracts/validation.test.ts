@@ -9,7 +9,7 @@ import {
 } from "../../helpers/mock-client.js";
 import { ContractError } from "../../../src/errors/index.js";
 
-const CONTRACT_ADDRESS = "0x9806919185F98Bd07a64F7BC7F264e91939e86b7" as Address;
+const CONTRACT_ADDRESS = "0x34766dBa7040C2c8817f1Ee1e448209826DD607e" as Address;
 
 describe("Validation Reader", () => {
   let publicClient: ReturnType<typeof createMockPublicClient>;

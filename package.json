@@ -1,7 +1,7 @@
 {
   "name": "@tagit/sdk",
   "version": "0.1.0",
-  "description": "TypeScript SDK for TAGIT ERC-8004 agent contracts on OP Sepolia",
+  "description": "TypeScript SDK for TAGIT ERC-8004 agent contracts on Base Sepolia",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

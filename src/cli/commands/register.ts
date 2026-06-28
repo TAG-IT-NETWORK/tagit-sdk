@@ -14,7 +14,7 @@ export const registerCommand = new Command("register")
     const config = resolveConfig(opts);
     const publicClient = createCliPublicClient(config);
     const walletClient = createCliWalletClient(config);
-    const addresses = getAddresses(11155420);
+    const addresses = getAddresses(84532);
 
     const reader = createIdentityReader(publicClient, addresses.TAGITAgentIdentity);
     const writer = createIdentityWriter(walletClient, publicClient, addresses.TAGITAgentIdentity);

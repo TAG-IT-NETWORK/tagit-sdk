@@ -21,10 +21,10 @@ TypeScript SDK for TAGIT ERC-8004 agent contracts.
 - A2A types mirror `tagit-services/src/a2a/types.ts` exactly — keep in sync
 - `fetch` is injectable via config for testability — never mock globals in A2A tests
 
-## Contract Addresses (OP Sepolia)
-- TAGITAgentIdentity: `0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D`
-- TAGITAgentReputation: `0x57CCa1974DFE29593FBD24fdAEE1cD614Bfd6E4a`
-- TAGITAgentValidation: `0x9806919185F98Bd07a64F7BC7F264e91939e86b7`
+## Contract Addresses (Base Sepolia)
+- TAGITAgentIdentity: `0x0611FE60f6E37230bDaf04c5F2Ac2dc9012130a9`
+- TAGITAgentReputation: `0x32be6C82A57d5bCe897538d7dA4109eA0eeB0aA1`
+- TAGITAgentValidation: `0x34766dBa7040C2c8817f1Ee1e448209826DD607e`
 
 ## Commands
 - `npm run build` — compile TypeScript

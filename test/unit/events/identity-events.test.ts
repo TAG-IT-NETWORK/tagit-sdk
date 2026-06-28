@@ -3,7 +3,7 @@ import type { Address } from "viem";
 import { watchAgentRegistered, watchAgentStatusChanged } from "../../../src/events/identity-events.js";
 import { createMockPublicClient } from "../../helpers/mock-client.js";
 
-const CONTRACT_ADDRESS = "0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D" as Address;
+const CONTRACT_ADDRESS = "0x0611FE60f6E37230bDaf04c5F2Ac2dc9012130a9" as Address;
 
 describe("Identity Events", () => {
   it("watchAgentRegistered calls watchContractEvent and returns unsubscribe", () => {

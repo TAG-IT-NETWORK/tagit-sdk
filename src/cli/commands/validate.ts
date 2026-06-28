@@ -13,7 +13,7 @@ export const validateCommand = new Command("validate")
     const config = resolveConfig(opts);
     const publicClient = createCliPublicClient(config);
     const walletClient = createCliWalletClient(config);
-    const addresses = getAddresses(11155420);
+    const addresses = getAddresses(84532);
 
     const writer = createValidationWriter(walletClient, publicClient, addresses.TAGITAgentValidation);
 

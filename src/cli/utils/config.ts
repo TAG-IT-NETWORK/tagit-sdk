@@ -1,6 +1,6 @@
 import { createPublicClient, createWalletClient, http, type PublicClient, type WalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { opSepolia } from "../../chains/index.js";
+import { baseSepolia } from "../../chains/index.js";
 
 export interface CliConfig {
   rpcUrl: string;
@@ -8,7 +8,7 @@ export interface CliConfig {
 }
 
 export function resolveConfig(opts: { rpcUrl?: string; privateKey?: string }): CliConfig {
-  const rpcUrl = opts.rpcUrl ?? process.env["TAGIT_RPC_URL"] ?? "https://sepolia.optimism.io";
+  const rpcUrl = opts.rpcUrl ?? process.env["TAGIT_RPC_URL"] ?? "https://sepolia.base.org";
   const privateKey = opts.privateKey ?? process.env["TAGIT_PRIVATE_KEY"];
 
   return {
@@ -19,7 +19,7 @@ export function resolveConfig(opts: { rpcUrl?: string; privateKey?: string }): C
 
 export function createCliPublicClient(config: CliConfig): PublicClient {
   return createPublicClient({
-    chain: opSepolia,
+    chain: baseSepolia,
     transport: http(config.rpcUrl),
   });
 }
@@ -30,7 +30,7 @@ export function createCliWalletClient(config: CliConfig): WalletClient {
   }
   const account = privateKeyToAccount(config.privateKey);
   return createWalletClient({
-    chain: opSepolia,
+    chain: baseSepolia,
     transport: http(config.rpcUrl),
     account,
   });

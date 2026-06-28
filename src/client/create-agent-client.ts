@@ -6,7 +6,7 @@ import {
   type WalletClient,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { opSepolia } from "../chains/index.js";
+import { baseSepolia } from "../chains/index.js";
 import { getAddresses } from "../addresses/index.js";
 import { createIdentityReader, createIdentityWriter } from "../contracts/identity.js";
 import { createReputationReader, createReputationWriter } from "../contracts/reputation.js";
@@ -27,7 +27,7 @@ import { SdkError } from "../errors/index.js";
  * omitted and the client operates in read-only mode.
  *
  * @param config - Client configuration (chain, RPC URL, keys, pre-built viem clients).
- *   Defaults to OP Sepolia with the chain's default public RPC.
+ *   Defaults to Base Sepolia with the chain's default public RPC.
  * @returns A {@link TagitAgentClient} with identity, reputation, validation, and events namespaces.
  * @throws {SdkError} If no RPC URL can be resolved from the config or chain definition.
  *
@@ -45,7 +45,7 @@ import { SdkError } from "../errors/index.js";
  * ```
  */
 export function createAgentClient(config: AgentClientConfig = {}): TagitAgentClient {
-  const chain = config.chain ?? opSepolia;
+  const chain = config.chain ?? baseSepolia;
   const rpcUrl = config.rpcUrl ?? chain.rpcUrls.default.http[0];
 
   if (!rpcUrl) {

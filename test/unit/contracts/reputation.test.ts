@@ -9,7 +9,7 @@ import {
 } from "../../helpers/mock-client.js";
 import { ContractError } from "../../../src/errors/index.js";
 
-const CONTRACT_ADDRESS = "0x57CCa1974DFE29593FBd24fdAEE1cD614Bfd6E4a" as Address;
+const CONTRACT_ADDRESS = "0x32be6C82A57d5bCe897538d7dA4109eA0eeB0aA1" as Address;
 
 describe("Reputation Reader", () => {
   let publicClient: ReturnType<typeof createMockPublicClient>;

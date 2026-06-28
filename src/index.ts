@@ -56,7 +56,7 @@ export {
 
 // Addresses & chains
 export { getAddresses, type ContractAddresses } from "./addresses/index.js";
-export { opSepolia } from "./chains/index.js";
+export { baseSepolia } from "./chains/index.js";
 
 // Errors
 export { SdkError, ContractError, ValidationError } from "./errors/index.js";

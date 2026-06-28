@@ -14,7 +14,7 @@ export const feedbackCommand = new Command("feedback")
     const config = resolveConfig(opts);
     const publicClient = createCliPublicClient(config);
     const walletClient = createCliWalletClient(config);
-    const addresses = getAddresses(11155420);
+    const addresses = getAddresses(84532);
 
     const writer = createReputationWriter(walletClient, publicClient, addresses.TAGITAgentReputation);
 

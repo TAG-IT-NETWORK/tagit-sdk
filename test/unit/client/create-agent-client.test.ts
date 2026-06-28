@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createAgentClient } from "../../../src/client/create-agent-client.js";
-import { opSepolia } from "../../../src/chains/index.js";
+import { baseSepolia } from "../../../src/chains/index.js";
 
 describe("createAgentClient", () => {
   it("creates read-only client with default chain", () => {
@@ -15,7 +15,7 @@ describe("createAgentClient", () => {
   });
 
   it("creates read-only client with explicit chain", () => {
-    const client = createAgentClient({ chain: opSepolia });
+    const client = createAgentClient({ chain: baseSepolia });
     expect(client.publicClient).toBeDefined();
   });
 

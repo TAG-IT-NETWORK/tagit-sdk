@@ -1,6 +1,6 @@
 # @tagit/sdk
 
-TypeScript SDK and CLI for interacting with TAGIT ERC-8004 agent contracts on OP Sepolia.
+TypeScript SDK and CLI for interacting with TAGIT ERC-8004 agent contracts on Base Sepolia.
 
 ## Installation
 
@@ -15,7 +15,7 @@ import { createAgentClient } from "@tagit/sdk";
 
 // Read-only client (no private key needed)
 const client = createAgentClient({
-  rpcUrl: "https://sepolia.optimism.io",
+  rpcUrl: "https://sepolia.base.org",
 });
 
 // Read agent data
@@ -37,7 +37,7 @@ Provide a private key to enable write methods:
 
 ```typescript
 const client = createAgentClient({
-  rpcUrl: "https://sepolia.optimism.io",
+  rpcUrl: "https://sepolia.base.org",
   privateKey: "0x...",
 });
 
@@ -72,7 +72,7 @@ Creates a client instance. Config options:
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `chain` | `Chain` | Viem chain definition (default: OP Sepolia) |
+| `chain` | `Chain` | Viem chain definition (default: Base Sepolia) |
 | `rpcUrl` | `string` | RPC endpoint URL |
 | `privateKey` | `` `0x${string}` `` | Private key for write operations |
 | `publicClient` | `PublicClient` | Custom viem public client |
@@ -214,13 +214,13 @@ tagit agent validate --agent-id 1 --defense --private-key 0x...
 | `TAGIT_RPC_URL` | Default RPC endpoint |
 | `TAGIT_PRIVATE_KEY` | Default private key for write operations |
 
-## Contract Addresses (OP Sepolia)
+## Contract Addresses (Base Sepolia)
 
 | Contract | Address |
 |----------|---------|
-| TAGITAgentIdentity | `0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D` |
-| TAGITAgentReputation | `0x57CCa1974DFE29593FBD24fdAEE1cD614Bfd6E4a` |
-| TAGITAgentValidation | `0x9806919185F98Bd07a64F7BC7F264e91939e86b7` |
+| TAGITAgentIdentity | `0x0611FE60f6E37230bDaf04c5F2Ac2dc9012130a9` |
+| TAGITAgentReputation | `0x32be6C82A57d5bCe897538d7dA4109eA0eeB0aA1` |
+| TAGITAgentValidation | `0x34766dBa7040C2c8817f1Ee1e448209826DD607e` |
 
 ## Development
 

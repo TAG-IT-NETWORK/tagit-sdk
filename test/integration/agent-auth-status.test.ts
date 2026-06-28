@@ -37,9 +37,9 @@ import {
 import { A2AClient } from "../../src/a2a/client.js";
 import { A2AProtocolError } from "../../src/a2a/errors.js";
 
-const IDENTITY_ADDRESS = "0xA7f34FD595eBc397Fe04DcE012dbcf0fbbD2A78D" as Address;
-const VALIDATION_ADDRESS = "0x9806919185F98Bd07a64F7BC7F264e91939e86b7" as Address;
-const REPUTATION_ADDRESS = "0x57CCa1974DFE29593FBD24fdAEE1cD614Bfd6E4a" as Address;
+const IDENTITY_ADDRESS = "0x0611FE60f6E37230bDaf04c5F2Ac2dc9012130a9" as Address;
+const VALIDATION_ADDRESS = "0x34766dBa7040C2c8817f1Ee1e448209826DD607e" as Address;
+const REPUTATION_ADDRESS = "0x32be6C82A57d5bCe897538d7dA4109eA0eeB0aA1" as Address;
 
 // ── Agent Status Constants ─────────────────────────────────
 const AgentStatus = {

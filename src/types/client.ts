@@ -3,11 +3,11 @@ import type { Address, Chain, PublicClient, WalletClient } from "viem";
 /**
  * Configuration for {@link createAgentClient}.
  *
- * All fields are optional. When omitted, the client defaults to OP Sepolia
+ * All fields are optional. When omitted, the client defaults to Base Sepolia
  * with the chain's default public RPC and read-only mode.
  */
 export interface AgentClientConfig {
-  /** Target chain definition (defaults to OP Sepolia). */
+  /** Target chain definition (defaults to Base Sepolia). */
   chain?: Chain;
   /** Custom RPC URL (overrides the chain's default). */
   rpcUrl?: string;

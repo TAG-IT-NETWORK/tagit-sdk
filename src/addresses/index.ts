@@ -34,14 +34,12 @@ const addresses: Record<number, ContractAddresses> = {
     TAGITAgentIdentity: "0x0611FE60f6E37230bDaf04c5F2Ac2dc9012130a9",
     TAGITAgentReputation: "0x32be6C82A57d5bCe897538d7dA4109eA0eeB0aA1",
     TAGITAgentValidation: "0x34766dBa7040C2c8817f1Ee1e448209826DD607e",
-    // pending deployment on Base — zero address until live
-    ReputationStaking: "0x0000000000000000000000000000000000000000",
+    ReputationStaking: "0x4154af74DA2B3a98096317100296966Ade15574A",
     TAGITCore: "0x3adC7eFdB58Ae85483Eff5D4966D916185F31D1d",
     TAGITToken: "0x5f98B83cD7Aef769cc51D2FB739BA49D561170DE",
     TAGITGovernor: "0xCF67Df870ECcbB7838c3Ab7876467c89d84DCe89",
     TAGITTreasury: "0xa4A3720d705334f409Dd24836Cc75D642125f759",
-    // pending deployment on Base — zero address until live
-    VerificationEscrow: "0x0000000000000000000000000000000000000000",
+    VerificationEscrow: "0x4c9aACfcb64169E3BC187c227c4C0e0a5CFDA1cF",
   },
 };
 

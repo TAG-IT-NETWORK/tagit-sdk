@@ -4,8 +4,13 @@ TypeScript SDK and CLI for interacting with TAGIT ERC-8004 agent contracts on Ba
 
 ## Installation
 
+> **Not yet published to npm.** `npm install @tagit/sdk` returns `E404` — this package has
+> never been published, and the `@tagit` scope on npm belongs to an unrelated third party.
+> Do not install from it. Until a TAG IT-owned scope is registered, build from source:
+
 ```bash
-npm install @tagit/sdk
+git clone https://github.com/TAG-IT-NETWORK/tagit-sdk.git
+cd tagit-sdk && npm install && npm run build
 ```
 
 ## Quick Start

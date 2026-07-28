@@ -189,10 +189,13 @@ const client = pool.get("http://localhost:3000"); // reuses existing
 
 ## CLI Usage
 
-```bash
-# Install globally
-npm install -g @tagit/sdk
+> **There is no global install.** `npm install -g @tagit/sdk` returns `E404` for the
+> same reason as the library install above — this package has never been published,
+> and the `@tagit` scope belongs to an unrelated third party. Build from source as
+> described in [Installation](#installation), then run the CLI through
+> `node dist/cli/index.js …`, or `npm link` once to put `tagit` on your PATH.
 
+```bash
 # Get agent info (read-only)
 tagit agent info --agent-id 1
 

@@ -1,4 +1,4 @@
-# @tagit/sdk
+# @tagitnetwork/sdk
 
 TypeScript SDK for TAGIT ERC-8004 agent contracts.
 
@@ -16,7 +16,7 @@ TypeScript SDK for TAGIT ERC-8004 agent contracts.
 - Event watchers return unsubscribe function (`() => void`)
 - Named imports only, strict TypeScript
 - CLI is a separate export — no commander dependency leaks into SDK core
-- A2A client (`src/a2a/`) is a separate subpath export (`@tagit/sdk/a2a`) — no viem dependency for A2A-only consumers
+- A2A client (`src/a2a/`) is a separate subpath export (`@tagitnetwork/sdk/a2a`) — no viem dependency for A2A-only consumers
 - A2A errors extend `SdkError` (A2AError → SdkError), so `catch (e instanceof SdkError)` catches both contract and A2A errors
 - A2A types mirror `tagit-services/src/a2a/types.ts` exactly — keep in sync
 - `fetch` is injectable via config for testability — never mock globals in A2A tests

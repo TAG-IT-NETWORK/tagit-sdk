@@ -1,7 +1,7 @@
 {
-  "name": "@tagit/sdk",
+  "name": "@tagitnetwork/sdk",
   "version": "0.1.0",
-  "description": "TypeScript SDK for TAGIT ERC-8004 agent contracts on Base Sepolia",
+  "description": "TypeScript SDK and CLI for TAG IT ERC-8004 agent contracts on Base Sepolia. Unaudited testnet software.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -52,5 +52,28 @@
   "license": "MIT",
   "lint-staged": {
     "*.ts": "bash -c 'tsc -p tsconfig.build.json --noEmit'"
+  },
+  "keywords": [
+    "nfc",
+    "ntag424",
+    "product-authentication",
+    "provenance",
+    "erc-8004",
+    "base",
+    "base-sepolia",
+    "viem",
+    "digital-product-passport",
+    "anti-counterfeiting"
+  ],
+  "homepage": "https://www.tagit.network/docs/agent-quickstart",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TAG-IT-NETWORK/tagit-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TAG-IT-NETWORK/tagit-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

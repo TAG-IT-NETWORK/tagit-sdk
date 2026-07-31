@@ -1,12 +1,24 @@
-# @tagit/sdk
+# @tagitnetwork/sdk
 
 TypeScript SDK and CLI for interacting with TAGIT ERC-8004 agent contracts on Base Sepolia.
 
+> [!WARNING]
+> **Unaudited software on a public testnet.** The contracts this SDK reads have not
+> completed a third-party security audit, and everything is deployed to Base Sepolia
+> (chain `84532`) — a testnet, with no real value at stake. Do not use it to make
+> decisions about real assets or funds.
+
 ## Installation
 
-> **Not yet published to npm.** `npm install @tagit/sdk` returns `E404` — this package has
-> never been published, and the `@tagit` scope on npm belongs to an unrelated third party.
-> Do not install from it. Until a TAG IT-owned scope is registered, build from source:
+```bash
+npm install @tagitnetwork/sdk
+```
+
+> **Install from `@tagitnetwork`, never `@tagit`.** The similarly-named `@tagit` scope on
+> npm belongs to an unrelated third party and has nothing to do with this project. Anything
+> published there is not ours, and `@tagit/sdk` has never existed.
+
+Or build from source:
 
 ```bash
 git clone https://github.com/TAG-IT-NETWORK/tagit-sdk.git
@@ -16,7 +28,7 @@ cd tagit-sdk && npm install && npm run build
 ## Quick Start
 
 ```typescript
-import { createAgentClient } from "@tagit/sdk";
+import { createAgentClient } from "@tagitnetwork/sdk";
 
 // Read-only client (no private key needed)
 const client = createAgentClient({
@@ -136,7 +148,7 @@ Typed client for TAGIT A2A agent servers (JSON-RPC 2.0). No extra dependencies �
 
 ```typescript
 // Import from dedicated subpath (no viem dependency)
-import { A2AClient } from "@tagit/sdk/a2a";
+import { A2AClient } from "@tagitnetwork/sdk/a2a";
 
 const client = new A2AClient({
   baseUrl: "http://localhost:3000",
@@ -171,7 +183,7 @@ for await (const event of client.subscribe({ skill: "echo", input: {} })) {
 ### Connection Pooling
 
 ```typescript
-import { A2AClientPool } from "@tagit/sdk/a2a";
+import { A2AClientPool } from "@tagitnetwork/sdk/a2a";
 
 const pool = new A2AClientPool({ timeout: 10_000 });
 const client = pool.get("http://localhost:3000"); // reuses existing
@@ -189,7 +201,7 @@ const client = pool.get("http://localhost:3000"); // reuses existing
 
 ## CLI Usage
 
-> **There is no global install.** `npm install -g @tagit/sdk` returns `E404` for the
+> **There is no global install.** `npm install -g @tagitnetwork/sdk` returns `E404` for the
 > same reason as the library install above — this package has never been published,
 > and the `@tagit` scope belongs to an unrelated third party. Build from source as
 > described in [Installation](#installation), then run the CLI through

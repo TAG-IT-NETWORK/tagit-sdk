@@ -36,7 +36,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.2.0",
     "lint-staged": "^17.3.0",
     "typedoc": "^0.28.20",
     "typedoc-plugin-markdown": "^4.12.0",
